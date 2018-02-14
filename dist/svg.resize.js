@@ -319,14 +319,14 @@
         // When resizing started, we have to register events for...
         // Touches.
         SVG.on(window, 'touchmove.resize', function(e) {
-            _this.update(e || window.event);
+            _this.update(e || window.event, event.type);
         });
         SVG.on(window, 'touchend.resize', function() {
             _this.done();
         });
         // Mouse.
         SVG.on(window, 'mousemove.resize', function (e) {
-            _this.update(e || window.event);
+            _this.update(e || window.event, event.type);
         });
         SVG.on(window, 'mouseup.resize', function () {
             _this.done();
@@ -335,7 +335,7 @@
     };
 
     // The update-function redraws the element every time the mouse is moving
-    ResizeHandler.prototype.update = function (event) {
+    ResizeHandler.prototype.update = function (event, type) {
 
         if (!event) {
             if (this.lastUpdateCall) {
@@ -357,7 +357,7 @@
         this.calc(diffX, diffY);
 
        // Emit an event to say we have changed.
-        this.el.fire('resizing', {dx: diffX, dy: diffY, event: event});
+        this.el.fire('resizing', {dx: diffX, dy: diffY, type: type, event: event});
     };
 
     // Is called on mouseup.
